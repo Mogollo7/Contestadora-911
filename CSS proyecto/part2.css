@@ -1,160 +1,288 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat|Montserrat+Alternates|Poppins&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap');
+
+:root {
+    /* === Colores base === */
+    --black: #21282C;
+    --bg: #2D3134;
+    --ng: #651FDD;
+
+    /* === Tipografías === */
+    --font-family-sans-serif: "Nunito Sans", sans-serif;
+    --font-family-monospace: Monaco, Consolas, monospace;
+}
+
 * {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-font-family: "Montserrat Alternates", sans-serif;
-}
-body {
-background-image: #efe9e0;
-background-attachment: fixed;
-background-size: cover; 
-background-position: center; 
-background-repeat: no-repeat;
-}
-.capa {
-position: fixed;
-width: 100%;
-height: 100vh;
-z-index: -1;
-top: 0;
-left: 0;
-}
-
-/*Estilos para el encabezado*/
-.header {
-width: 100%;
-height: 100px;
-position: fixed;
-top: 0;
-left: 0;
-}
-.container {
-width: 90%;
-max-width: 1200px;
-margin: auto;
-}
-.container .btn-menu,
-.logo {
-float: left;
-line-height: 100px;
-}
-.container .btn-menu label {
-color: black;
-font-size: 25px;
-cursor: pointer;
-}
-.logo h1 {
-color: black;
-font-weight: 400;
-font-size: 22px;
-margin-left: 10px;
-}
-.container .menu {
-float: right;
-line-height: 100px;
-}
-.container .menu a {
-display: inline-block;
-padding: 15px;
-line-height: normal;
-text-decoration: none;
-color: black;
-transition: all 0.3s ease;
-border-bottom: 2px solid transparent;
-font-size: 15px;
-margin-right: 5px;
-}
-.container .menu a:hover {
-border-bottom: 2px solid black;
-padding-bottom: 5px;
-}
-/*Fin de Estilos para el encabezado*/
-
-/* texto cuerpo */
-.Texto1 {
-    text-align: center;
-    color: BLACK;
-    position: absolute;
-    left: 50%;
-    top: 40%;
-    transform: translate(-50%, -50%);
-}
-
-/* Estilo del botón con Neumorphism */
-.btn0 {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 12px 25px;
-    background-color: #0f9e99;
-    color: #efe9e0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     text-decoration: none;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 6px 6px 20px -1px rgba(0, 0, 0, 0.15),
-                -6px -6px 20px -1px rgba(255, 255, 255, 0.7);
+    border: none;
+    outline: none;
+    font-family: var(--font-family-sans-serif); 
 }
 
-.btn0:hover {
-    background-color: #0f9e99;
-    box-shadow: inset 4px 4px 10px -1px rgba(0, 0, 0, 0.15),
-                inset -4px -4px 10px -1px rgba(255, 255, 255, 0.7);
+html {
+    font-size: 62.5%;
 }
 
+body {
+    width: 100%;
+    height: 100vh;
+    overflow-x: hidden;
+    background-color: var(--bg);
+    color: white;
+}
 
-/*Menù lateral*/
-#btn-menu {
-display: none;
+header {
+    margin-top: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem 9%;
+    background-color: transparent;
+    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.3));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
 }
-.container-menu {
-position: absolute;
-background: #efe9e0;
-width: 100%;
-height: 100vh;
-top: 0;
-left: 0;
-transition: all 500ms ease;
-opacity: 0;
-visibility: hidden;
+
+.logo {
+    font-size: 3rem;
+    color: var(--ng);
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.5s ease;
 }
-#btn-menu:checked ~ .container-menu {
-opacity: 1;
-visibility: visible;
+
+.logo:hover {
+    transform: scale(1.1);
 }
-.cont-menu {
-width: 100%;
-max-width: 250px;
-background: #df3ca0be;
-height: 100vh;
-position: relative;
-transition: all 500ms ease;
-transform: translateX(-100%);
+
+nav a {
+    font-size: 1.8rem;
+    color: white;
+    margin-left: 4rem;
+    font-weight: 500;
+    transition: 0.3s;
+    border-bottom: 3px transparent;
 }
-#btn-menu:checked ~ .container-menu .cont-menu {
-transform: translateX(0%);
+
+nav a:hover,
+nav a:active {
+    color: var(--ng);
+    border-bottom: 3px solid var(--ng);
 }
-.cont-menu nav {
-transform: translateY(15%);
+
+section {
+    min-height: 100vh;
+    padding: 5rem 9% 5rem;
 }
-.cont-menu nav a {
-display: block;
-text-decoration: none;
-padding: 20px;
-color: #c7c7c7;
-border-left: 5px solid transparent;
-transition: all 400ms ease;
+
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8rem;
+    background-color: var(--bg);
 }
-.cont-menu nav a:hover {
-border-left: 5px solid #c7c7c7;
-background: #1f1f1f;
+
+.home .home_content h1 {
+    font-size: 6rem;
+    font-weight: 700;
+    line-height: 1.3;
 }
-.cont-menu label {
-position: absolute;
-right: 5px;
-top: 10px;
-color: #efe9e0;
-cursor: pointer;
-font-size: 18px;
+
+span {
+    color: var(--ng);
 }
-/*Fin de Menù lateral*/
+
+.home_content h3 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.home_content p{
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: justify;
+}
+
+.home-img {
+    border-radius: 50%;
+}
+
+.home-img img {
+    position: relative;
+    width: 55vh;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.2s linear;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2),
+                -8px -8px 15px rgba(255, 255, 255, 0.1);
+}
+
+.home-img img:hover {
+    transform: scale(1.05);
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.2),
+                -12px -12px 20px rgba(255, 255, 255, 0.1);
+}
+.btn{
+    display:  inline-block;
+    padding:  1rem 2.8rem;
+    background-color: var(--bg);
+    border-radius: 46px;
+    font-size: 1.6rem;
+    color: var(--ng);
+    letter-spacing: 0.3rem;
+    font-weight: 600;
+    margin-top: 3rem;
+    border:  2px solid var(--ng);
+    transition: 0.3s ease;
+    cursor: pointer;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2),
+                -10px -10px 20px rgba(255, 255, 255, 0.1);
+}
+
+.btn:hover{
+    transform: scale3d(1.03);
+    background-color: var(--ng);
+    color: var(--bg);
+    box-shadow: inset 10px 10px 20px rgba(0, 0, 0, 0.2),
+                inset -10px -10px 20px rgba(255, 255, 255, 0.1);
+}
+
+.typing-text{
+    font-size: 34px;
+    font-weight: 600;
+    min-width: 280px;
+}
+
+.typing-text span{
+    position: relative;
+}
+
+.typing-text span::before{
+    content: "asistente de IA";
+    color: #651FDD;
+    animation: words 20s infinite;
+}
+
+.typing-text span::after{
+    content: "";
+    background-color: var(--bg);
+    position: absolute;
+    width: calc(100% + 8px);
+    height: 100%;
+    border-left:3px solid var(--bg);
+    right: -8;
+    animation: cursor 0.6s infinite;
+}
+
+@keyframes cursor{
+    to{
+        border-left: 3px solid var(--ng);
+    }
+}
+
+@keyframes words {
+    0%, 20% {
+        content: "bot de emergencias 911";
+    }
+    21%, 40% {
+        content: "asistente de emergencias";
+    }
+    41%, 60% {
+        content: "Apoyo en dificultades";
+    }
+    61%, 80% {
+        content: "ayuda en necesidad";
+    }
+    81%, 100% {
+        content: "soporte en crisis";
+    }
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background-color: var(--bg);
+    border-right: 2px solid var(--ng);
+    transition: 0.3s ease;
+    z-index: 1000;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2),
+                -10px -10px 20px rgba(255, 255, 255, 0.1);
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--ng);
+}
+
+.sidebar-header h2 {
+    color: var(--ng);
+    font-size: 2.4rem;
+    font-weight: 700;
+}
+
+.close-btn {
+    background: transparent;
+    color: var(--ng);
+    font-size: 2.4rem;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s ease;
+}
+
+.close-btn:hover {
+    transform: scale(1.1);
+}
+
+.sidebar-menu {
+    padding: 20px;
+}
+
+.menu-item {
+    display: block;
+    padding: 15px;
+    margin: 10px 0;
+    color: white;
+    font-size: 1.8rem;
+    border-radius: 46px;
+    transition: 0.3s ease;
+    text-align: center;
+    background-color: var(--bg);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2),
+                -10px -10px 20px rgba(255, 255, 255, 0.1);
+}
+
+.menu-item:hover {
+    background-color: var(--ng);
+    color: var(--bg);
+    box-shadow: inset 10px 10px 20px rgba(0, 0, 0, 0.2),
+                inset -10px -10px 20px rgba(255, 255, 255, 0.1);
+}
+
+.menu-btn {
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.menu-btn:hover {
+    color: var(--ng);
+}
