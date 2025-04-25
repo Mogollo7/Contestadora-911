@@ -5,6 +5,8 @@
     --black: #21282C;
     --bg: #2D3134;
     --ng: #651FDD;
+    --light-shadow: #383D41; 
+    --dark-shadow: #1A1E21; 
 
     /* === Tipografías === */
     --font-family-sans-serif: "Nunito Sans", sans-serif;
@@ -121,14 +123,14 @@ span {
     border-radius: 50%;
     cursor: pointer;
     transition: 0.2s linear;
-    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2),
-                -8px -8px 15px rgba(255, 255, 255, 0.1);
+    box-shadow: 8px 8px 15px var(--dark-shadow)
+                -8px -8px 15px var(--light-shadow);
 }
 
 .home-img img:hover {
     transform: scale(1.05);
-    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.2),
-                -12px -12px 20px rgba(255, 255, 255, 0.1);
+    box-shadow: 12px 12px 20px var(--dark-shadow),
+                -12px -12px 20px var(--light-shadow);
 }
 .btn{
     display:  inline-block;
@@ -265,7 +267,7 @@ span {
     transition: 0.3s ease;
     text-align: center;
     background-color: var(--bg);
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2),
+    box-shadow: 10px 10px 20px var(--dark-shadow),
                 -10px -10px 20px rgba(255, 255, 255, 0.1);
 }
 

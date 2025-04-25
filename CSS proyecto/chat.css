@@ -5,8 +5,8 @@
     --black: #21282C;
     --bg: #2D3134;
     --ng: #9118dc;
-    --light-shadow: #383D41; /* sombra clara para resaltar */
-    --dark-shadow: #1A1E21; /* sombra oscura para profundidad */
+    --light-shadow: #383D41; 
+    --dark-shadow: #1A1E21; 
 
     /* === Tipografías === */
     --font-family-sans-serif: "Nunito Sans", sans-serif;

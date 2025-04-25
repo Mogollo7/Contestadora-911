@@ -5,54 +5,97 @@
     <title>Menù Lateral con Css</title>
     <link rel="stylesheet" href="cola.css" />
 </head>
-<body>    
-    <div class="cuadro1">
-        <h1>Bomberos</h1>
-        <a class="btn1">llamar</a>
-    </div>
-    <div class="cuadro2">
-        <h1>Hospital</h1>
-        <a class="btn2">llamar</a>
-    </div>
-    <div class="cuadro3">
-        <h1>Policia</h1>
-        <a class="btn3">llamar</a>
-    </div>
-    <div class="cuadro4">
-        <h1>Otra vaina random</h1>
-        <a class="btn4">llamar</a>
-    </div>
-    <header class="header">
-    <div class="container">
-        <div class="btn-menu">
-        <label for="btn-menu">☰</label>
-        </div>
-        <div class="logo">
-        <h1>Emergency system</h1>
-        </div>
-        <nav class="menu">
-        <a href="#">Inicio</a>
-        <a href="#">Nosotros</a>
-        <a href="#">Blog</a>
-        <a href="#">Contacto</a>
-        </nav>
-    </div>
-    </header>    
-
-    <div class="capa"></div>
-    <!--	--------------->
-    <input type="checkbox" id="btn-menu" />
-    <div class="container-menu">
-    <div class="cont-menu">
+<body> 
+    <header>
+        <a href="#" class="logo">Alex</a>
+    
         <nav>
-        <a href="part1.html">Inicio</a>
-        <a href="cola.html">Cuerpos especiales</a>
-        <a href="pila.html">Historial</a>
-        <a href="chat.html">Chat</a>
+            <a href="#" class="Inicio"></a>
+            <a href="Index.html" >Inicio</a>
+            <a href="cola.html">Colas</a>
+            <a href="pila.html">Pilas</a>
+            <a href="#">Nosotros</a>
+            <a href="#">Documentación</a>
         </nav>
-        <label for="btn-menu">✖️</label>
+    </header>    
+    <div class="wrapper">
+        <div class="container">
+            <input type="radio" name="slide" id="c1" checked>
+            <label for="c1" class="card">
+                <div class="row">
+                    <div class="icon">1</div>
+                    <div class="description">
+                        <h4>Policía</h4>
+                        <p>Se ha iniciado la solicitud de apoyo. Las unidades más cercanas del departamento de Policía están siendo notificadas para atender la emergencia con prontitud.</p>
+                        <button>Enviar</button>
+                    </div>
+                </div>
+            </label>
+
+            <input type="radio" name="slide" id="c2">
+            <label for="c2" class="card">
+                <div class="row">
+                    <div class="icon">2</div>
+                    <div class="description">
+                        <h4>Desastres</h4>
+                        <p>Se ha activado el protocolo de respuesta. Las brigadas más cercanas del departamento de Gestión de Riesgos están movilizándose hacia la zona afectada.</p>
+                        <button>Enviar</button>
+                    </div>
+                </div>
+            </label>
+
+            <input type="radio" name="slide" id="c3">
+            <label for="c3" class="card">
+                <div class="row">
+                    <div class="icon">3</div>
+                    <div class="description">
+                        <h4>Ambulancia</h4>
+                        <p>El servicio de emergencias médicas ha sido alertado. Las ambulancias más cercanas están en camino al lugar del incidente para brindar asistencia inmediata.</p>
+                        <button>Enviar</button>
+                    </div>
+                </div>
+            </label>
+
+            <input type="radio" name="slide" id="c4">
+            <label for="c4" class="card">
+                <div class="row">
+                    <div class="icon">4</div>
+                    <div class="description">
+                        <h4>Línea de ayuda</h4>
+                        <p>Se ha establecido contacto con el centro de atención psicológica. Un orientador será asignado para brindar apoyo emocional lo antes posible.</p>
+                        <button>Enviar</button>
+                    </div>
+                </div>
+            </label>
+
+            <input type="radio" name="slide" id="c5">
+            <label for="c5" class="card">
+                <div class="row">
+                    <div class="icon">5</div>
+                    <div class="description">
+                        <h4>Bomberos</h4>
+                        <p>La alerta ha sido enviada al cuerpo de Bomberos. Las unidades más cercanas se están desplegando para controlar la situación de forma inmediata.</p>
+                        <button>Enviar</button>
+                    </div>
+                </div>
+            </label>
+            <!--muchachos si necesita mas departamentos los puede añadir solo debe copiar esto y ponerle c# etc y añdir una linea en el css -->
+            <input type="radio" name="slide" id="c6">
+            <label for="c6" class="card">
+                <div class="row">
+                    <div class="icon">6</div>
+                    <div class="description">
+                        <h4>Transito</h4>
+                        <p>La solicitud ha sido recibida por el departamento de Tránsito. Las patrullas y agentes más cercanos están siendo movilizados para atender el incidente y regular el tráfico en la zona afectada.</p>
+                        <button>Enviar</button>
+                    </div>
+                </div>
+            </label>
+        </div>
     </div>
-    </div>    
+    <button id="sendButton">Enviar todas las unidades</button>
+
+
 
 </body>
 </html>
