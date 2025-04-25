@@ -1,39 +1,32 @@
-<!doctype html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Menù Lateral con Css</title>
-    <link rel="stylesheet" href="chat.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="chat.css">
+    <title>911-bot</title>
     <script defer src="chat.js"></script>
-    <script
-        type="module"
-        src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-    ></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 </head>
 <body>
-    <header class="header">
-    <div class="container">
-        <div class="btn-menu">
-        <label for="btn-menu">☰</label>
-        </div>
-        <div class="logo">
-        <h1>Emergency system</h1>
-        </div>
-        <nav class="menu">
-        <a href="#">Inicio</a>
+   <header>
+    <a href="#" class="logo">Alex</a>
+    <nav>
+        <a href="#" class="Inicio"></a>
+        <a href="Index.html">Inicio</a>
+        <a href="cola.html">Colas</a>
+        <a href="pila.html">Pilas</a>
         <a href="#">Nosotros</a>
-        <a href="#">Blog</a>
-        <a href="#">Contacto</a>
-        </nav>
-    </div>
-    </header>
-    <div class="chatbox">
+        <a href="#">Documentación</a>
+    </nav>
+   </header> 
+    <div class="chat-box">
         <div class="chat-header">
             <div class="chat-profile">
-                <img src="profile.jpg" alt=""/>
+                <img src="OIP.jpeg" alt="">
             </div>
-            <div class="chatname">
-                <b>Operador</b><br /><small>Escribiendo...</small>
+            <div class="chat-name">
+                <b>Usuario</b><br /><small>Respondiendo..</small>
             </div>
             <div class="call">
                 <ion-icon name="call"></ion-icon>
@@ -41,32 +34,21 @@
         </div>
         <div class="chat-messages" id="msg-plt">
             <div class="message-container">
-                <div class="message-text"><p>Hola ¿Cual es su emergencia?</p></div>
+                <div class="message-text"><p>Hola como estas</p></div>
             </div>
             <div class="message-container self">
-                <div class="message-text"><p>me robaron el corazon causa</p></div>
+                <div class="message-text">
+                    <p>Estoy bien gracias</p>
+                </div>
             </div>
             <div class="message-container">
-                <div class="message-text">esplendido</div>
+                <div class="message-text"><p>😊</p></div>
             </div>
         </div>
         <div class="chat-input">
-            <input type="text" id="msg" placeholder="Mensaje..."/>
-            <button onclick="send()">enviar</button>
+            <input type="text" id="msg" placeholder="Ingresa tu mensaje..."/>
+            <button onclick="send()">Send</button>
         </div>
-    </div>
-    <!--	--------------->
-    <input type="checkbox" id="btn-menu" />
-    <div class="container-menu">
-    <div class="cont-menu">
-        <nav>
-        <a href="part1.html">Inicio</a>
-        <a href="cola.html">Cuerpos especiales</a>
-        <a href="pila.html">Historial</a>
-        <a href="chat.html">Chat</a>
-        </nav>
-        <label for="btn-menu">✖️</label>
-    </div>
     </div>
 </body>
 </html>
