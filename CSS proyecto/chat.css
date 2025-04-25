@@ -112,8 +112,8 @@ section {
 }
 
 .chat-profile img {
-    width: 3.5em;
-    height: 3.5em;
+    width: 4.5em;
+    height: 4.5em;
     border-radius: 100%;
     box-shadow: 
         8px 8px 16px var(--dark-shadow),
