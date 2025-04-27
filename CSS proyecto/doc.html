@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="doc.css">
+    <title>Documentación</title>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">Doc v1.0</a>
+    
+        <nav>
+            <a href="#" class="Inicio"></a>
+            <a href="Index.html" >Inicio</a>
+            <a href="cola.html">Colas</a>
+            <a href="pila.html">Pilas</a>
+            <a href="#">Nosotros</a>
+            <a href="doc.html">Documentación</a>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="main-content">
+          <aside class="neo-sidebar">
+            <h2>Contenido</h2>
+            <nav>
+              <ul>
+                <li><button onclick="mostrar('introduccion')">Introducción</button></li>
+                <li><button onclick="mostrar('objetivos')">Objetivos</button></li>
+                <li><button onclick="mostrar('alcance')">Alcance</button></li>
+                <li><button onclick="mostrar('tecnologias')">Tecnologías</button></li>
+                <li><button onclick="mostrar('requisitos')">Requisitos</button></li>
+                <li><button onclick="mostrar('instalacion')">Instalación</button></li>
+                <li><button onclick="mostrar('docker')">Docker</button></li>
+                <li><button onclick="mostrar('arquitectura')">Arquitectura</button></li>
+                <li><button onclick="mostrar('mapas')">Mapas</button></li>
+                <li><button onclick="mostrar('chatbot')">Chat bot</button></li>
+                <li><button onclick="mostrar('testing')">Testing</button></li>
+                <li><button onclick="mostrar('despliegue')">Despliegue</button></li>
+                <li><button onclick="mostrar('creditos')">Créditos</button></li>
+              </ul>
+            </nav>
+          </aside>
+    
+          <section class="neo-card" id="seccion">
+            <h3>Introducción</h3>
+            <p>Bienvenido a la documentación.</p>
+            <div class="button-container">
+                <button class="neo-button" onclick="mostrar('introduccion')">Siguiente
+                    <ion-icon name="arrow-forward-outline"></ion-icon> 
+                </button>
+            </div>
+
+          </section>
+        </div>
+      </div>
+    
+      <script src="doc.js"></script>
+</body>
+</html>
