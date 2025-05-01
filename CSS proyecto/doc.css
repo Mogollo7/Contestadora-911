@@ -159,8 +159,8 @@ nav a:active {
 
 .neo-sidebar button:hover {
     box-shadow: 
-    inset 5px 10px var(--dark-shadow), 
-    inset -5px 10px var(--light-shadow);
+    inset 5px 5px 8px var(--dark-shadow), 
+    inset -5px -5px 8px var(--light-shadow);
 }
 
 .neo-card {
@@ -215,3 +215,57 @@ nav a:active {
 ::-webkit-scrollbar{
     width: 0;
 }
+a{
+    color: var(--ng);
+}
+
+.intro-section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .intro-section h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .intro-section p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+    font-size: 12px;
+  }
+  
+  .alert {
+    border-radius: 8px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--light-shadow);
+    padding: 20px;
+    margin: 40px;
+    box-shadow:  20px 20px 40px var(--dark-shadow),
+    -20px -20px 40px var(--light-shadow);    
+  }
+  
+  
+  .alert p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .alert-footer {
+    margin-bottom: 0;
+    font-style: italic;
+  }
+  
+  .alert-info {
+    background-color: transparent;
+  }
+  
+  .custom-hr {
+    border: none;
+    border-top: 2px solid #ccc;
+    margin: 10px 0;
+  }
+
