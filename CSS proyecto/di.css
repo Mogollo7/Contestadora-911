@@ -298,7 +298,7 @@ a{
 }
 
 .code-box {
-    padding: 1.2rem 1.6rem;
+    padding: 2rem;
     margin: 2rem auto;
     background-color: var(--bg);
     color: #e0f2fe;
@@ -306,31 +306,52 @@ a{
     font-size: 1.2rem;
     border-radius: 1rem;
     box-shadow: 
-      inset 5px 5px 10px var(--dark-shadow),
-      inset -5px -5px 10px var(--light-shadow);
-  }
-  
-  .code-box-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .code-box code {
-    flex: 1;
-    background: none;
+        inset 5px 5px 10px var(--dark-shadow),
+        inset -5px -5px 10px var(--light-shadow);
+}
+
+.code-box pre {
+    margin: 0;
+}
+
+.code-box code {
     color: #e0f2fe;
-    word-break: break-word;
-  }
-  
-  .copiar-btn {
-    padding: 0.5rem 1rem;
-    font-size: 1.2rem;
-  }
-  
-  .code-box p {
-    padding: 0.5rem 0 !important;
-    margin: 0 !important;
-  }
-  
+    background: none;
+}
+
+.code-box {
+  padding: 1.2rem 1.6rem;
+  margin: 2rem auto;
+  background-color: var(--bg);
+  color: #e0f2fe;
+  font-family: var(--font-family-monospace);
+  font-size: 1.2rem;
+  border-radius: 1rem;
+  box-shadow: 
+    inset 5px 5px 10px var(--dark-shadow),
+    inset -5px -5px 10px var(--light-shadow);
+}
+
+.code-box-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.code-box code {
+  flex: 1;
+  background: none;
+  color: #e0f2fe;
+  word-break: break-word;
+}
+
+.copiar-btn {
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+}
+
+.code-box p {
+  padding: 0.5rem 0 !important;
+  margin: 0 !important;
+}

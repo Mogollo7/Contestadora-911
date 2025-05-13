@@ -1,0 +1,76 @@
+.neo-diagram {
+    background: var(--bg);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 30px 0;
+    box-shadow: 
+        8px 8px 16px var(--dark-shadow),
+        -8px -8px 16px var(--light-shadow);
+}
+
+.diagram-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.neo-section {
+    background: var(--bg);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 
+        inset 5px 5px 10px var(--dark-shadow),
+        inset -5px -5px 10px var(--light-shadow);
+}
+
+.section-spacing {
+    padding: 40px;
+    margin: 30px 0;
+}
+
+.neo-section h5 {
+    color: var(--ng);
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.architecture-components {
+    list-style-type: none;
+    padding-left: 15px;
+}
+
+.architecture-components li {
+    margin: 10px 0;
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.architecture-components ul {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.docker-structure,
+.volume-list {
+    list-style-type: none;
+    padding-left: 15px;
+    margin: 15px 0;
+}
+
+.docker-structure li,
+.volume-list li {
+    margin: 10px 0;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    padding-left: 20px;
+    position: relative;
+}
+
+.docker-structure li:before,
+.volume-list li:before {
+    content: "•";
+    color: var(--ng);
+    position: absolute;
+    left: 0;
+} 
