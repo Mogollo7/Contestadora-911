@@ -203,20 +203,20 @@ input:checked + label .description{
     transform: translateY(0) !important;
 }
 .card[for="c1"]{
-    background-image: url('DPI.jpg');
+    background-image: url('/static/img/DPI.jpg');
 }
 .card[for="c2"]{
-    background-image: url('Disaster.jpg');
+    background-image: url('/static/img/Disaster.jpg');
 }
 .card[for="c3"]{
-    background-image: url('Ambulance.jpg');
+    background-image: url('/static/img/Ambulance.jpg');
 }
 .card[for="c4"]{
-    background-image: url('Mentality.jpg');
+    background-image: url('/static/img/Mentality.jpg');
 }
 .card[for="c5"]{
-    background-image: url('Fire.jpg');
+    background-image: url('/static/img/Fire.jpg');
 }
 .card[for="c6"]{
-    background-image: url('dpit.jpg');
+    background-image: url('/static/img/dpit.jpg');
 }

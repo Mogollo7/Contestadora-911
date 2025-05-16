@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="doc.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/doc.css') }}">
     <title>Documentación</title>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -12,14 +12,14 @@
     <header>
         <a href="#" class="logo">Doc v1.0</a>
     
-        <nav>
-            <a href="#" class="Inicio"></a>
-            <a href="Index.html" >Inicio</a>
-            <a href="cola.html">Colas</a>
-            <a href="pila.html">Pilas</a>
-            <a href="#">Nosotros</a>
-            <a href="doc.html">Documentación</a>
-        </nav>
+      <nav>
+          <a href="#" class="Inicio"></a>
+          <a href="Index" >Inicio</a>
+          <a href="cola">Colas</a>
+          <a href="pila">Pilas</a>
+          <a href="#">Nosotros</a>
+          <a href="doc">Documentación</a>
+      </nav>
     </header>
     <div class="container">
         <div class="main-content">
@@ -100,6 +100,7 @@
           </section>
         </div>
       </div>
-      <script src="doc.js"></script>
+      <script src="{{ url_for('static', filename='js/doc.js') }}"></script>
+
 </body>
 </html>

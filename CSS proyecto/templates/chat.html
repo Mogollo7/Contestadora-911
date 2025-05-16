@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="chat.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
     <title>911-bot</title>
-    <script defer src="chat.js"></script>
+    <script defer src="{{ url_for('static', filename='js/chat.js') }}"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 </head>
 <body>
@@ -13,17 +13,17 @@
     <a href="#" class="logo">Alex</a>
     <nav>
         <a href="#" class="Inicio"></a>
-        <a href="Index.html">Inicio</a>
-        <a href="cola.html">Colas</a>
-        <a href="pila.html">Pilas</a>
+        <a href="Index" >Inicio</a>
+        <a href="cola">Colas</a>
+        <a href="pila">Pilas</a>
         <a href="#">Nosotros</a>
-        <a href="doc.html">Documentación</a>
+        <a href="doc">Documentación</a>
     </nav>
    </header> 
     <div class="chat-box">
         <div class="chat-header">
             <div class="chat-profile">
-                <img src="OIP.jpeg" alt="">
+                <img src="static/img/OIP.jpeg" alt="">
             </div>
             <div class="chat-name">
                 <b>Usuario</b><br /><small>Respondiendo..</small>

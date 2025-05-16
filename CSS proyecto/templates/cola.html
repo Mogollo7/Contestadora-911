@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Menù Lateral con Css</title>
-    <link rel="stylesheet" href="cola.css" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cola.css') }}">
 </head>
 <body> 
     <header>
@@ -11,11 +11,11 @@
     
         <nav>
             <a href="#" class="Inicio"></a>
-            <a href="Index.html" >Inicio</a>
-            <a href="cola.html">Colas</a>
-            <a href="pila.html">Pilas</a>
+            <a href="Index" >Inicio</a>
+            <a href="cola">Colas</a>
+            <a href="pila">Pilas</a>
             <a href="#">Nosotros</a>
-            <a href="doc.html">Documentación</a>
+            <a href="doc">Documentación</a>
         </nav>
     </header>    
     <div class="wrapper">

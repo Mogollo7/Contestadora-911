@@ -545,7 +545,7 @@ function mostrar(seccion) {
                 <p>La arquitectura del sistema está diseñada para manejar llamadas de emergencia de manera eficiente y escalable.</p>
 
                 <div class="diagram-container">
-                    <img src="diagrama.png" alt="Diagrama de arquitectura del sistema" width="100%" height="600px">
+        <img src="/static/img/diagrama.png" alt="Diagrama de arquitectura del sistema" width="100%" height="600px">
                 </div>
 
 
