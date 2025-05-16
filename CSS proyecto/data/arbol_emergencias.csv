@@ -1,0 +1,13 @@
+palabra_clave,prioridad,departamento
+muerto,10,policía judicial
+asesinato,10,policía judicial
+explosion,10,escuadrón antiterrorista
+incendio,9,bomberos
+sangre,9,salud
+herido,8,salud
+accidente,7,tránsito
+robo,6,policía
+asalto,6,policía
+pelea,5,policía
+gritos,4,vecinal
+ruido,3,vecinal
