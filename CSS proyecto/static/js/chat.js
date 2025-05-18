@@ -1,4 +1,5 @@
 let userAddress = '';
+let userName = '';
 
 function createMap(route) {
     // Crear contenedor para el mapa
@@ -48,10 +49,27 @@ async function send() {
     addMessage(message, true);
     
     try {
+        // Si no tenemos nombre
+        if (!userName && !message.toLowerCase().startsWith('nombre:')) {
+            addMessage('Por favor, proporciona tu nombre. Escribe: "Nombre: <tu nombre>"');
+            messageInput.value = 'Nombre: ';
+            messageInput.focus();
+            return;
+        }
+
+        if (message.toLowerCase().startsWith('nombre:')) {
+            userName = message.substring(7).trim();
+            addMessage('Gracias. Ahora, por favor proporciona la dirección con "Dirección: <dirección>"');
+            messageInput.value = 'Dirección: ';
+            messageInput.focus();
+            return;
+        }
+
         // Si no tenemos dirección, preguntarla primero
         if (!userAddress && !message.toLowerCase().includes('dirección:')) {
             addMessage('Por favor, proporciona la dirección de la emergencia. Comienza tu mensaje con "Dirección:"');
             messageInput.value = 'Dirección: ';
+            messageInput.focus();
             return;
         }
         
@@ -60,6 +78,7 @@ async function send() {
             userAddress = message.substring(10).trim();
             addMessage('Gracias por proporcionar la dirección. Ahora, por favor describe la emergencia.');
             messageInput.value = '';
+            messageInput.focus();
             return;
         }
         
@@ -71,7 +90,8 @@ async function send() {
             },
             body: JSON.stringify({
                 mensaje: message,
-                direccion: userAddress
+                direccion: userAddress,
+                nombre: userName
             })
         });
 
@@ -80,18 +100,12 @@ async function send() {
         // Mostrar respuesta del bot
         const botContainer = addMessage(data.mensaje);
         
-        // Si hay información de ruta, mostrar el mapa
-        if (data.ruta) {
-            const mapContainer = createMap(data.ruta);
-            botContainer.appendChild(mapContainer);
-            
-            // Agregar información de la ruta
-            const routeInfo = document.createElement('div');
-            routeInfo.innerHTML = `
-                <p>📏 Distancia: ${data.ruta.distance.toFixed(2)} km</p>
-                <p>⏱️ Tiempo estimado: ${data.ruta.duration.toFixed(2)} minutos</p>
-            `;
-            botContainer.appendChild(routeInfo);
+        // Mostrar link al mapa si hay id
+        if (data.id) {
+            const linkDiv = document.createElement('div');
+            linkDiv.style.marginTop = '10px';
+            linkDiv.innerHTML = `<a href="/mapa/${data.id}" target="_blank" style="color: #007bff; text-decoration: underline;">Ver mapa de la emergencia</a>`;
+            botContainer.appendChild(linkDiv);
         }
 
     } catch (error) {
@@ -101,4 +115,16 @@ async function send() {
 
     // Limpiar input
     messageInput.value = '';
+    messageInput.focus();
 }
+
+// Permitir enviar con Enter y salto de línea con Shift+Enter
+document.addEventListener('DOMContentLoaded', function() {
+    const messageInput = document.getElementById('msg');
+    messageInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            send();
+        }
+    });
+});

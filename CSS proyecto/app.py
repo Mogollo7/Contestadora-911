@@ -6,34 +6,41 @@ from datetime import datetime
 import csv
 import os
 import folium
+import hashlib
+from decision_tree import get_prioridad_departamento
 
 app = Flask(__name__)
 
-# Asegurar que el directorio data existe
+ESTACIONES = {
+    'bomberos': "Cl. 142a Sur #50 - 25, Caldas, Antioquia",
+    'policía': "Cl. 138b Sur #46-94, Caldas, Antioquia",
+    'salud': "Carrera 48 #135 SUR - 41",
+    'tránsito': "Cra. 48 #129 - 59, Caldas, Antioquia",
+    'vecinal': "Cl. 138b Sur #46-94, Caldas, Antioquia",
+    'policía judicial': "Cl. 138b Sur #46-94, Caldas, Antioquia",
+    'escuadrón antiterrorista': "Cl. 71 #65-20, El Progreso, Medellín, Castilla, Medellín, Antioquia"
+}
+
 def asegurar_directorios():
     data_dir = os.path.join(os.path.dirname(__file__), "data")
     if not os.path.exists(data_dir):
         os.makedirs(data_dir)
     return data_dir
 
-# Crear archivo arbol_emergencias.csv si no existe
-def crear_arbol_emergencias():
-    data_dir = asegurar_directorios()
-    arbol_path = os.path.join(data_dir, "arbol_emergencias.csv")
-    
-    if not os.path.exists(arbol_path):
-        datos_iniciales = {
-            'palabra_clave': ['muerto', 'asesinato', 'explosion', 'incendio', 'sangre', 
-                            'herido', 'accidente', 'robo', 'asalto', 'pelea', 'gritos', 'ruido'],
-            'prioridad': [10, 10, 10, 9, 9, 8, 7, 6, 6, 5, 4, 3],
-            'departamento': ['policía judicial', 'policía judicial', 'escuadrón antiterrorista',
-                           'bomberos', 'salud', 'salud', 'tránsito', 'policía', 'policía',
-                           'policía', 'vecinal', 'vecinal']
-        }
-        df = pd.DataFrame(datos_iniciales)
-        df.to_csv(arbol_path, index=False, encoding='latin1')
+def generar_id(nombre, direccion, tipo, fecha):
+    raw = f"{nombre}{direccion}{tipo}{fecha}".encode('utf-8')
+    return hashlib.sha256(raw).hexdigest()
 
-# Función para consultar LLaMA
+def guardar_emergencia(id_emergencia, fecha, nombre, direccion, tipo, prioridad, departamento, base):
+    data_dir = asegurar_directorios()
+    ruta_emergencias = os.path.join(data_dir, "emergencias.csv")
+    existe = os.path.exists(ruta_emergencias)
+    with open(ruta_emergencias, 'a', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+        if not existe:
+            writer.writerow(['id', 'fecha', 'nombre', 'direccion', 'tipo', 'prioridad', 'departamento', 'base'])
+        writer.writerow([id_emergencia, fecha, nombre, direccion, tipo, prioridad, departamento, base])
+
 def consultar_llama(prompt):
     try:
         response = requests.post(
@@ -47,7 +54,6 @@ def consultar_llama(prompt):
     except Exception as e:
         return f"⚠️ Error al conectarse con Ollama: {str(e)}"
 
-# Función para obtener coordenadas
 def obtener_coordenadas(direccion):
     try:
         geolocator = Nominatim(user_agent="emergency-bot")
@@ -59,55 +65,57 @@ def obtener_coordenadas(direccion):
         print(f"Error al obtener coordenadas: {str(e)}")
         return None
 
-# Función para obtener ruta desde la base de emergencias
 def obtener_ruta(origen_coords, destino_coords):
     try:
         url = f"http://localhost:5000/route/v1/driving/{origen_coords[1]},{origen_coords[0]};{destino_coords[1]},{destino_coords[0]}?overview=full&geometries=geojson"
         response = requests.get(url)
-        
         if response.status_code == 200:
             data = response.json()
             return {
                 'route': data['routes'][0]['geometry']['coordinates'],
-                'distance': data['routes'][0]['distance'] / 1000,  # convertir a km
-                'duration': data['routes'][0]['duration'] / 60  # convertir a minutos
+                'distance': data['routes'][0]['distance'] / 1000,
+                'duration': data['routes'][0]['duration'] / 60
             }
         return None
     except Exception as e:
         print(f"Error al obtener ruta: {str(e)}")
         return None
 
-# Cargar árbol de decisiones
-def cargar_arbol_csv():
-    try:
-        crear_arbol_emergencias()
-        ruta_arbol = os.path.join(os.path.dirname(__file__), "data", "arbol_emergencias.csv")
-        return pd.read_csv(ruta_arbol, encoding="latin1")
-    except Exception as e:
-        print(f"Error al cargar el árbol: {str(e)}")
-        return pd.DataFrame(columns=['palabra_clave', 'prioridad', 'departamento'])
+@app.route('/procesar_mensaje', methods=['POST'])
+def procesar_mensaje():
+    data = request.json
+    mensaje = data.get('mensaje', '')
+    direccion = data.get('direccion', '')
+    nombre = data.get('nombre', 'Usuario Chat')
 
-# Buscar prioridad y departamento basado en palabras clave
-def buscar_prioridad_y_departamento(texto):
-    texto = texto.lower()
-    for _, row in arbol.iterrows():
-        if str(row["palabra_clave"]).lower() in texto:
-            return int(row["prioridad"]), row["departamento"]
-    return 3, "Por definir"
+    prioridad, departamento = get_prioridad_departamento(mensaje)
+    fecha = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+    base = ESTACIONES.get(departamento.lower(), "CALLE 142 A SUR CARRERA 50 25 CALDAS Antioquia")
+    id_emergencia = generar_id(nombre, direccion, mensaje, fecha)
 
-# Guardar emergencia
-def guardar_emergencia(nombre, direccion, tipo, prioridad, departamento):
-    data_dir = asegurar_directorios()
-    ruta_emergencias = os.path.join(data_dir, "emergencias.csv")
-    
-    if not os.path.exists(ruta_emergencias):
-        with open(ruta_emergencias, 'w', newline='', encoding='utf-8') as f:
-            writer = csv.writer(f)
-            writer.writerow(['fecha', 'nombre', 'direccion', 'tipo', 'prioridad', 'departamento'])
-    
-    with open(ruta_emergencias, mode="a", newline="", encoding='utf-8') as file:
-        writer = csv.writer(file)
-        writer.writerow([datetime.now(), nombre, direccion, tipo, prioridad, departamento])
+    # Guardar emergencia
+    guardar_emergencia(id_emergencia, fecha, nombre, direccion, mensaje, prioridad, departamento, base)
+
+    # Respuesta de LLaMA
+    prompt = f"Eres un asistente de emergencias 911. El usuario reporta: '{mensaje}'. Dale una respuesta empática y profesional, mencionando que la prioridad es {prioridad}/10 y que se ha asignado al departamento de {departamento}."
+    respuesta_llama = consultar_llama(prompt)
+
+    # Ruta
+    info_ruta = None
+    if direccion:
+        coords_destino = obtener_coordenadas(direccion)
+        coords_base = obtener_coordenadas(base)
+        if coords_destino and coords_base:
+            info_ruta = obtener_ruta(coords_base, coords_destino)
+
+    respuesta = {
+        'mensaje': respuesta_llama,
+        'prioridad': prioridad,
+        'departamento': departamento,
+        'ruta': info_ruta,
+        'id': id_emergencia
+    }
+    return jsonify(respuesta)
 
 @app.route('/Index')
 def index():
@@ -129,50 +137,42 @@ def pila():
 def doc():
     return render_template("doc.html")
 
-@app.route('/procesar_mensaje', methods=['POST'])
-def procesar_mensaje():
-    data = request.json
-    mensaje = data.get('mensaje', '')
-    direccion = data.get('direccion', '')
-    
-    # Procesamos el mensaje usando la lógica del bot
-    prioridad, departamento = buscar_prioridad_y_departamento(mensaje)
-    
-    # Consultamos a LLaMA para obtener una respuesta más natural
-    prompt = f"Eres un asistente de emergencias 911. El usuario reporta: '{mensaje}'. Dale una respuesta empática y profesional, mencionando que la prioridad es {prioridad}/10 y que se ha asignado al departamento de {departamento}."
-    respuesta_llama = consultar_llama(prompt)
-    
-    # Información de ruta si hay dirección
-    info_ruta = None
-    if direccion:
-        coords_destino = obtener_coordenadas(direccion)
-        if coords_destino:
-            # Coordenadas de la base de emergencias (ejemplo)
-            coords_base = obtener_coordenadas("Cra 46 #50-30, Medellín, Antioquia, Colombia")
-            if coords_base:
-                info_ruta = obtener_ruta(coords_base, coords_destino)
-    
-    # Guardamos la emergencia
-    guardar_emergencia(
-        nombre="Usuario Chat",
-        direccion=direccion if direccion else "Pendiente",
-        tipo=mensaje,
-        prioridad=prioridad,
-        departamento=departamento
-    )
-    
-    # Preparamos la respuesta
-    respuesta = {
-        'mensaje': respuesta_llama,
-        'prioridad': prioridad,
-        'departamento': departamento,
-        'ruta': info_ruta
-    }
-    
-    return jsonify(respuesta)
+@app.route('/mapa/<id_emergencia>')
+def mapa(id_emergencia):
+    data_dir = asegurar_directorios()
+    ruta_emergencias = os.path.join(data_dir, "emergencias.csv")
+    df = pd.read_csv(ruta_emergencias)
 
-# Inicializar el árbol de decisiones al inicio
-arbol = cargar_arbol_csv()
+    # Buscar la fila correspondiente al id
+    fila = df[df['id'] == id_emergencia]
+    if fila.empty:
+        return "ID de emergencia no encontrado", 404
+
+    fila = fila.iloc[0]
+    direccion_usuario = fila['direccion']
+    base = fila['base']
+
+    coords_usuario = obtener_coordenadas(direccion_usuario)
+    coords_base = obtener_coordenadas(base)
+
+    if not coords_usuario or not coords_base:
+        return "No se pudieron obtener las coordenadas para el mapa", 400
+
+    # Crear el mapa con Folium
+    m = folium.Map(location=coords_usuario, zoom_start=14)
+    folium.Marker(coords_usuario, tooltip="Emergencia", icon=folium.Icon(color='red')).add_to(m)
+    folium.Marker(coords_base, tooltip="Base", icon=folium.Icon(color='blue')).add_to(m)
+
+    ruta = obtener_ruta(coords_base, coords_usuario)
+    if ruta:
+        folium.PolyLine(
+            locations=[(lat, lon) for lon, lat in ruta['route']],
+            color='blue',
+            weight=5
+        ).add_to(m)
+
+    # Renderizar el mapa como HTML
+    return m._repr_html_()
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)

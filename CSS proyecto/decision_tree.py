@@ -27,3 +27,24 @@ def predecir_ruta(clf, le_emergency, le_response, call):
     pred_encoded = clf.predict(X_pred)[0]
     return le_response.inverse_transform([pred_encoded])[0]
 
+def get_prioridad_departamento(tipo):
+    tipo = tipo.lower()
+    arbol = [
+        ('muerto', 10, 'policía judicial'),
+        ('asesinato', 10, 'policía judicial'),
+        ('explosion', 10, 'escuadrón antiterrorista'),
+        ('incendio', 9, 'bomberos'),
+        ('sangre', 9, 'salud'),
+        ('herido', 8, 'salud'),
+        ('accidente', 7, 'tránsito'),
+        ('robo', 6, 'policía'),
+        ('asalto', 6, 'policía'),
+        ('pelea', 5, 'policía'),
+        ('gritos', 4, 'vecinal'),
+        ('ruido', 3, 'vecinal'),
+    ]
+    for palabra, prioridad, departamento in arbol:
+        if palabra in tipo:
+            return prioridad, departamento
+    return 1, 'Por definir'
+
