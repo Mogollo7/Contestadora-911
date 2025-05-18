@@ -1,0 +1,9 @@
+id,fecha,nombre,direccion,tipo,prioridad,departamento,base
+2cbda6d68959cafb9896dd1c9c605618bfe9a8b33eb3280df05c13c1653f54e1,2025-05-18 17:02:43.940523,Juan,"Cra 48A #51-33, Medellín, Antioquia, Colombia",hay gritos,4,vecinal,"Cl. 138b Sur #46-94, Caldas, Antioquia"
+064f15228a674b6180d480d046b2ee5f4856487a93109dd6e2c64b72d584c6b3,2025-05-18 17:10:37.434020,gg,"Cra 48A #51-33, Medellín, Antioquia, Colombia",hay un incendio,9,bomberos,"Cl. 142a Sur #50 - 25, Caldas, Antioquia"
+3e558cf37e5f08963bdbf89ab500c3ab6be47cd74d54efa1af830187076a0fb0,2025-05-18 17:12:25.876693,hh,"Cra 48A #51-33, Medellín, Antioquia, Colombia",hay un incendio,9,bomberos,"Cl. 142a Sur #50 - 25, Caldas, Antioquia"
+d626356df2e67c18282d4d2a94deeaa7be9b7b3856c0f9f373c6b617d30bd766,2025-05-18 17:13:39.187295,g,"Cra 48A #51-33, Medellín, Antioquia, Colombia",incendio,9,bomberos,"Cl. 142a Sur #50 - 25, Caldas, Antioquia"
+4e48d3bcd48f1aaf1ea7c767e68a9ab1c646b04c38c48ffd8b1b6868a21d27bb,2025-05-18 17:32:47.814631,jj,"Cra 48A #51-33, Medellín, Antioquia, Colombia",sangre,9,salud,Carrera 48 #135 SUR - 41
+26cc0e3b658f0e830ffb15e07d4c8182773e4c2f25da0d2713bb92f6b343a927,2025-05-18 17:33:54.256277,g,"Cra 48A #50-33, Medellín, Antioquia, Colombia",ruido,3,vecinal,"Cl. 138b Sur #46-94, Caldas, Antioquia"
+eacab4745045f63d9d652a11c4e4821f8417634de25298d5a261bd31c824111d,2025-05-18 17:36:41.265132,juan,"Cra 48A #51-33, Medellín, Antioquia, Colombia",hay múltiples heridos,8,salud,Carrera 48 #135 SUR - 41
+4ea10030b77321122765c93716ef194711431051dcf6670d991a4a452abc8528,2025-05-18 17:38:53.188129,ff,"Cra 48A #51-33, Medellín, Antioquia, Colombia",robo,6,policía,"Cl. 138b Sur #46-94, Caldas, Antioquia"

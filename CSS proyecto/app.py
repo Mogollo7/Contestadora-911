@@ -8,6 +8,7 @@ import os
 import folium
 import hashlib
 from decision_tree import get_prioridad_departamento
+import shutil
 
 app = Flask(__name__)
 
@@ -81,6 +82,30 @@ def obtener_ruta(origen_coords, destino_coords):
         print(f"Error al obtener ruta: {str(e)}")
         return None
 
+def limpiar_emergencias_y_guardar_historial():
+    data_dir = asegurar_directorios()
+    ruta_emergencias = os.path.join(data_dir, "emergencias.csv")
+    ruta_historial = os.path.join(data_dir, "historial.csv")
+    # Si existe emergencias.csv y tiene datos, los agregamos a historial.csv
+    if os.path.exists(ruta_emergencias):
+        with open(ruta_emergencias, 'r', encoding='utf-8') as f:
+            lineas = f.readlines()
+        if len(lineas) > 1:  # Si hay datos además de la cabecera
+            # Si historial.csv no existe, escribe la cabecera
+            if not os.path.exists(ruta_historial):
+                with open(ruta_historial, 'w', encoding='utf-8') as h:
+                    h.write(lineas[0])
+            # Añade los datos (sin la cabecera)
+            with open(ruta_historial, 'a', encoding='utf-8') as h:
+                for linea in lineas[1:]:
+                    h.write(linea)
+    # Limpiar emergencias.csv (dejar solo la cabecera)
+    with open(ruta_emergencias, 'w', encoding='utf-8') as f:
+        f.write('id,fecha,nombre,direccion,tipo,prioridad,departamento,base\n')
+
+# Llamar a la función al iniciar el programa
+limpiar_emergencias_y_guardar_historial()
+
 @app.route('/procesar_mensaje', methods=['POST'])
 def procesar_mensaje():
     data = request.json
@@ -127,7 +152,26 @@ def chat():
 
 @app.route('/cola')
 def cola():
-    return render_template("cola.html")
+    data_dir = asegurar_directorios()
+    ruta_emergencias = os.path.join(data_dir, "emergencias.csv")
+    departamentos = [
+        'policía',
+        'bomberos',
+        'salud',
+        'tránsito',
+        'vecinal',
+        'policía judicial',
+        'escuadrón antiterrorista'
+    ]
+    conteo = {dep: 0 for dep in departamentos}
+
+    if os.path.exists(ruta_emergencias):
+        df = pd.read_csv(ruta_emergencias)
+        for dep in df['departamento']:
+            dep = str(dep).strip().lower()
+            if dep in conteo:
+                conteo[dep] += 1
+    return render_template("cola.html", conteo=conteo)
 
 @app.route('/pila')
 def pila():

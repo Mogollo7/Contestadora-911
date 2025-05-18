@@ -23,7 +23,7 @@
             <input type="radio" name="slide" id="c1" checked>
             <label for="c1" class="card">
                 <div class="row">
-                    <div class="icon">1</div>
+                    <div class="icon">{{ conteo['policía'] }}</div>
                     <div class="description">
                         <h4>Policía</h4>
                         <p>Se ha iniciado la solicitud de apoyo. Las unidades más cercanas del departamento de Policía están siendo notificadas para atender la emergencia con prontitud.</p>
@@ -35,10 +35,10 @@
             <input type="radio" name="slide" id="c2">
             <label for="c2" class="card">
                 <div class="row">
-                    <div class="icon">2</div>
+                    <div class="icon">{{ conteo['escuadrón antiterrorista'] }}</div>
                     <div class="description">
-                        <h4>Desastres</h4>
-                        <p>Se ha activado el protocolo de respuesta. Las brigadas más cercanas del departamento de Gestión de Riesgos están movilizándose hacia la zona afectada.</p>
+                        <h4>Antiterrorista</h4>
+                        <p>Se ha activado el protocolo de respuesta. El escuadrón antiterrorista está movilizándose hacia la zona afectada.</p>
                         <button>Enviar</button>
                     </div>
                 </div>
@@ -47,9 +47,9 @@
             <input type="radio" name="slide" id="c3">
             <label for="c3" class="card">
                 <div class="row">
-                    <div class="icon">3</div>
+                    <div class="icon">{{ conteo['salud'] }}</div>
                     <div class="description">
-                        <h4>Ambulancia</h4>
+                        <h4>Salud</h4>
                         <p>El servicio de emergencias médicas ha sido alertado. Las ambulancias más cercanas están en camino al lugar del incidente para brindar asistencia inmediata.</p>
                         <button>Enviar</button>
                     </div>
@@ -59,10 +59,10 @@
             <input type="radio" name="slide" id="c4">
             <label for="c4" class="card">
                 <div class="row">
-                    <div class="icon">4</div>
+                    <div class="icon">{{ conteo['vecinal'] }}</div>
                     <div class="description">
-                        <h4>Línea de ayuda</h4>
-                        <p>Se ha establecido contacto con el centro de atención psicológica. Un orientador será asignado para brindar apoyo emocional lo antes posible.</p>
+                        <h4>Vecinal</h4>
+                        <p>Se ha establecido contacto con el centro de atención vecinal. Un orientador será asignado para brindar apoyo lo antes posible.</p>
                         <button>Enviar</button>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
             <input type="radio" name="slide" id="c5">
             <label for="c5" class="card">
                 <div class="row">
-                    <div class="icon">5</div>
+                    <div class="icon">{{ conteo['bomberos'] }}</div>
                     <div class="description">
                         <h4>Bomberos</h4>
                         <p>La alerta ha sido enviada al cuerpo de Bomberos. Las unidades más cercanas se están desplegando para controlar la situación de forma inmediata.</p>
@@ -79,14 +79,26 @@
                     </div>
                 </div>
             </label>
-            <!--muchachos si necesita mas departamentos los puede añadir solo debe copiar esto y ponerle c# etc y añdir una linea en el css -->
+
             <input type="radio" name="slide" id="c6">
             <label for="c6" class="card">
                 <div class="row">
-                    <div class="icon">6</div>
+                    <div class="icon">{{ conteo['tránsito'] }}</div>
                     <div class="description">
-                        <h4>Transito</h4>
+                        <h4>Tránsito</h4>
                         <p>La solicitud ha sido recibida por el departamento de Tránsito. Las patrullas y agentes más cercanos están siendo movilizados para atender el incidente y regular el tráfico en la zona afectada.</p>
+                        <button>Enviar</button>
+                    </div>
+                </div>
+            </label>
+
+            <input type="radio" name="slide" id="c7">
+            <label for="c7" class="card">
+                <div class="row">
+                    <div class="icon">{{ conteo['policía judicial'] }}</div>
+                    <div class="description">
+                        <h4>Policía Judicial</h4>
+                        <p>Se ha notificado a la Policía Judicial. Los agentes especializados están en camino para realizar la investigación correspondiente.</p>
                         <button>Enviar</button>
                     </div>
                 </div>
@@ -94,8 +106,5 @@
         </div>
     </div>
     <button id="sendButton">Enviar todas las unidades</button>
-
-
-
 </body>
 </html>
