@@ -2,39 +2,63 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
-    <title>Menù Lateral con Css</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/pila.css') }}">
+    <title>Historial de Emergencias</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pila.css') }}">
+    <script>
+    function toggleDetalle(id) {
+        document.querySelectorAll('.historial-item').forEach(function(item) {
+            if(item.id === 'desplegado-' + id) {
+                item.classList.toggle('desplegado');
+            } else {
+                item.classList.remove('desplegado');
+            }
+        });
+    }
+    </script>
 </head>
 <body>
-    <header class="header">
-    <div class="container">
-        <div class="btn-menu">
-        <label for="btn-menu">☰</label>
-        </div>
-        <div class="logo">
-        <h1>Emergency system</h1>
-        </div>
-        <nav class="menu">
-        <a href="#">Inicio</a>
-        <a href="#">Nosotros</a>
-        <a href="#">Blog</a>
-        <a href="#">Contacto</a>
-        </nav>
-    </div>
-    </header>
-    <div class="capa"></div>
-    <!--	--------------->
-    <input type="checkbox" id="btn-menu" />
-    <div class="container-menu">
-    <div class="cont-menu">
+    <header>
+        <a href="#" class="logo">Alex</a>
         <nav>
-        <a href="part1.html">Inicio</a>
-        <a href="cola.html">Cuerpos especiales</a>
-        <a href="pila.html">Historial</a>
-        <a href="chat.html">Chat</a>
+            <a href="#" class="Inicio"></a>
+            <a href="Index" >Inicio</a>
+            <a href="cola">Colas</a>
+            <a href="pila">Pilas</a>
+            <a href="#">Nosotros</a>
+            <a href="doc">Documentación</a>
         </nav>
-        <label for="btn-menu">✖️</label>
-    </div>
+    </header>
+    <div class="historial-list">
+    {% if historial|length == 0 %}
+        <div class="no-data" style="text-align:center; margin-top: 100px;">
+            <img src="{{ url_for('static', filename='img/1.jpg') }}" alt="Sin emergencias" style="max-width:400px;">
+            <p>No hay emergencias atendidas.</p>
+        </div>
+    {% else %}
+        {% for emergencia in historial %}
+        <div class="historial-item" id="desplegado-{{ emergencia.id }}" onclick="toggleDetalle('{{ emergencia.id }}')">
+            <div class="historial-id">#{{ loop.index }}</div>
+            <div class="historial-main">
+                <div class="historial-nombre">{{ emergencia.nombre }} <span class="toggle-btn">&#9660;</span></div>
+                <div class="historial-detalle">
+                    <p><b>Prioridad:</b> {{ emergencia.prioridad }}</p>
+                    <p><b>Departamento:</b> {{ emergencia.departamento }}</p>
+                    <p><b>Dirección:</b> {{ emergencia.direccion }}</p>
+                    <p><b>Descripción:</b> {{ emergencia.tipo }}</p>
+                </div>
+            </div>
+            {% if emergencia.base and (emergencia.base.endswith('.html') or emergencia.base.endswith('.png')) %}
+            <div class="map-img">
+                {% if emergencia.base.endswith('.html') %}
+                <iframe src="{{ emergencia.base }}" width="350" height="350"></iframe>
+                {% else %}
+                <img src="{{ emergencia.base }}" width="350" height="350" />
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% endif %}
     </div>
 </body>
 </html>

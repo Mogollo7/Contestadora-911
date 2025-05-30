@@ -27,7 +27,7 @@
                     <div class="description">
                         <h4>Policía</h4>
                         <p>Se ha iniciado la solicitud de apoyo. Las unidades más cercanas del departamento de Policía están siendo notificadas para atender la emergencia con prontitud.</p>
-                        <button>Enviar</button>
+                        <button onclick="atenderTodas('policía')">Enviar</button>
                     </div>
                 </div>
             </label>
@@ -39,7 +39,7 @@
                     <div class="description">
                         <h4>Antiterrorista</h4>
                         <p>Se ha activado el protocolo de respuesta. El escuadrón antiterrorista está movilizándose hacia la zona afectada.</p>
-                        <button>Enviar</button>
+                        <button onclick="atenderTodas('escuadrón antiterrorista')">Enviar</button>
                     </div>
                 </div>
             </label>
@@ -51,7 +51,7 @@
                     <div class="description">
                         <h4>Salud</h4>
                         <p>El servicio de emergencias médicas ha sido alertado. Las ambulancias más cercanas están en camino al lugar del incidente para brindar asistencia inmediata.</p>
-                        <button>Enviar</button>
+                        <button onclick="atenderTodas('salud')">Enviar</button>
                     </div>
                 </div>
             </label>
@@ -63,7 +63,7 @@
                     <div class="description">
                         <h4>Vecinal</h4>
                         <p>Se ha establecido contacto con el centro de atención vecinal. Un orientador será asignado para brindar apoyo lo antes posible.</p>
-                        <button>Enviar</button>
+                        <button onclick="atenderTodas('vecinal')">Enviar</button>
                     </div>
                 </div>
             </label>
@@ -75,7 +75,7 @@
                     <div class="description">
                         <h4>Bomberos</h4>
                         <p>La alerta ha sido enviada al cuerpo de Bomberos. Las unidades más cercanas se están desplegando para controlar la situación de forma inmediata.</p>
-                        <button>Enviar</button>
+                        <button onclick="atenderTodas('bomberos')">Enviar</button>
                     </div>
                 </div>
             </label>
@@ -87,7 +87,7 @@
                     <div class="description">
                         <h4>Tránsito</h4>
                         <p>La solicitud ha sido recibida por el departamento de Tránsito. Las patrullas y agentes más cercanos están siendo movilizados para atender el incidente y regular el tráfico en la zona afectada.</p>
-                        <button>Enviar</button>
+                        <button onclick="atenderTodas('tránsito')">Enviar</button>
                     </div>
                 </div>
             </label>
@@ -99,12 +99,25 @@
                     <div class="description">
                         <h4>Policía Judicial</h4>
                         <p>Se ha notificado a la Policía Judicial. Los agentes especializados están en camino para realizar la investigación correspondiente.</p>
-                        <button>Enviar</button>
+                        <button onclick="atenderTodas('policía judicial')">Enviar</button>
                     </div>
                 </div>
             </label>
         </div>
     </div>
-    <button id="sendButton">Enviar todas las unidades</button>
+    <button id="sendButton" onclick="atenderTodas('todas')">Enviar todas las unidades</button>
+    <script>
+    function atenderTodas(departamento) {
+        fetch('/atender_todas', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ departamento: departamento })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) location.reload();
+        });
+    }
+    </script>
 </body>
 </html>

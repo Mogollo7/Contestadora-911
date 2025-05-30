@@ -9,6 +9,7 @@ import folium
 import hashlib
 from decision_tree import get_prioridad_departamento
 import shutil
+from queue_manager import FIFOQueue, CallHistoryStack
 
 app = Flask(__name__)
 
@@ -21,6 +22,19 @@ ESTACIONES = {
     'policía judicial': "Cl. 138b Sur #46-94, Caldas, Antioquia",
     'escuadrón antiterrorista': "Cl. 71 #65-20, El Progreso, Medellín, Castilla, Medellín, Antioquia"
 }
+
+# Inicializar colas por departamento y pila de historial
+departamentos = [
+    'policía',
+    'bomberos',
+    'salud',
+    'tránsito',
+    'vecinal',
+    'policía judicial',
+    'escuadrón antiterrorista'
+]
+emergency_queues = {dep: FIFOQueue() for dep in departamentos}
+history_stack = CallHistoryStack()
 
 def asegurar_directorios():
     data_dir = os.path.join(os.path.dirname(__file__), "data")
@@ -106,6 +120,29 @@ def limpiar_emergencias_y_guardar_historial():
 # Llamar a la función al iniciar el programa
 limpiar_emergencias_y_guardar_historial()
 
+def cargar_emergencias_en_colas():
+    data_dir = asegurar_directorios()
+    ruta_emergencias = os.path.join(data_dir, "emergencias.csv")
+    if os.path.exists(ruta_emergencias):
+        df = pd.read_csv(ruta_emergencias)
+        for _, row in df.iterrows():
+            emergencia = {
+                'id': row['id'],
+                'fecha': row['fecha'],
+                'nombre': row['nombre'],
+                'direccion': row['direccion'],
+                'tipo': row['tipo'],
+                'prioridad': row['prioridad'],
+                'departamento': row['departamento'],
+                'base': row['base']
+            }
+            dep = str(row['departamento']).strip().lower()
+            if dep in emergency_queues:
+                emergency_queues[dep].enqueue(emergencia, -int(row['prioridad']))  # Prioridad mayor primero
+
+# Cargar emergencias al iniciar
+cargar_emergencias_en_colas()
+
 @app.route('/procesar_mensaje', methods=['POST'])
 def procesar_mensaje():
     data = request.json
@@ -152,30 +189,90 @@ def chat():
 
 @app.route('/cola')
 def cola():
+    # Leer emergencias.csv y contar por departamento
     data_dir = asegurar_directorios()
     ruta_emergencias = os.path.join(data_dir, "emergencias.csv")
-    departamentos = [
-        'policía',
-        'bomberos',
-        'salud',
-        'tránsito',
-        'vecinal',
-        'policía judicial',
-        'escuadrón antiterrorista'
-    ]
     conteo = {dep: 0 for dep in departamentos}
-
     if os.path.exists(ruta_emergencias):
-        df = pd.read_csv(ruta_emergencias)
-        for dep in df['departamento']:
-            dep = str(dep).strip().lower()
-            if dep in conteo:
-                conteo[dep] += 1
+        with open(ruta_emergencias, newline='', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                dep = str(row['departamento']).strip().lower()
+                if dep in conteo:
+                    conteo[dep] += 1
     return render_template("cola.html", conteo=conteo)
+
+@app.route('/atender_emergencia', methods=['POST'])
+def atender_emergencia():
+    dep = request.json.get('departamento')
+    emergencia_id = request.json.get('id')
+    queue = emergency_queues.get(dep.lower())
+    if queue:
+        temp = []
+        encontrada = None
+        while not queue.is_empty():
+            item = queue.dequeue()
+            if item['id'] == emergencia_id:
+                encontrada = item
+            else:
+                temp.append(item)
+        for item in temp:
+            queue.enqueue(item, -int(item['prioridad']))
+        if encontrada:
+            history_stack.push(encontrada)
+            return jsonify({'success': True})
+    return jsonify({'success': False})
+
+@app.route('/atender_todas', methods=['POST'])
+def atender_todas():
+    dep = request.json.get('departamento')
+    data_dir = asegurar_directorios()
+    ruta_emergencias = os.path.join(data_dir, "emergencias.csv")
+    ruta_historial = os.path.join(data_dir, "historial.csv")
+    # Cargar todas las emergencias
+    emergencias = []
+    if os.path.exists(ruta_emergencias):
+        with open(ruta_emergencias, newline='', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                emergencias.append(row)
+    # Filtrar y mover según departamento
+    nuevas_emergencias = []
+    movidas = []
+    if dep == 'todas':
+        movidas = emergencias
+        nuevas_emergencias = []
+    else:
+        for row in emergencias:
+            if row['departamento'].strip().lower() == dep.strip().lower():
+                movidas.append(row)
+            else:
+                nuevas_emergencias.append(row)
+    # Ordenar movidas por prioridad descendente (mayor primero)
+    movidas.sort(key=lambda x: int(x['prioridad']), reverse=True)
+    # Guardar las movidas en el historial
+    existe_historial = os.path.exists(ruta_historial)
+    with open(ruta_historial, 'a', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=['id','fecha','nombre','direccion','tipo','prioridad','departamento','base'])
+        if not existe_historial:
+            writer.writeheader()
+        for row in movidas:
+            writer.writerow(row)
+    # Reescribir emergencias.csv solo con las que no se movieron
+    with open(ruta_emergencias, 'w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=['id','fecha','nombre','direccion','tipo','prioridad','departamento','base'])
+        writer.writeheader()
+        for row in nuevas_emergencias:
+            writer.writerow(row)
+    # También pásalas a la pila en memoria en orden de prioridad
+    for row in movidas:
+        history_stack.push(row)
+    return jsonify({'success': True})
 
 @app.route('/pila')
 def pila():
-    return render_template("pila.html")
+    historial = history_stack.get_history()
+    return render_template("pila.html", historial=historial)
 
 @app.route('/doc')
 def doc():
