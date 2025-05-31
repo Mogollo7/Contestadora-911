@@ -1,0 +1,188 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap");
+:root {
+  /* === Colores base === */
+  --bg: #2d3134;
+  --ng: #b69fd0;
+  --light-shadow: #383d41;
+  --dark-shadow: #1a1e21;
+  /* === Tipografías === */
+  --font-family-sans-serif: "Nunito Sans", sans-serif;
+  --font-family-monospace: Monaco, Consolas, monospace;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  font-family: var(--font-family-sans-serif);
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--bg);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+header {
+  margin-top: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem 9%;
+  background-color: transparent;
+  filter: drop-shadow(0px 4px 10px var(--dark-shadow));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+.logo {
+  font-size: 3rem;
+  color: var(--ng);
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.5s ease;
+}
+.logo:hover {
+  transform: scale(1.1);
+}
+nav a {
+  font-size: 1.8rem;
+  color: white;
+  margin-left: 4rem;
+  font-weight: 500;
+  transition: 0.3s;
+  border-bottom: 3px transparent;
+}
+nav a:hover,
+nav a:active {
+  color: var(--ng);
+  border-bottom: 3px solid var(--ng);
+}
+.contributors {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: 3rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+.contributor.card-style {
+    background: var(--bg);
+    border-radius: 2.5rem;
+    box-shadow: 8px 8px 24px var(--dark-shadow), -8px -8px 24px var(--light-shadow), 0 1.5px 8px #1a1e21;
+    padding: 2.8rem 2.5rem 2.2rem 2.5rem;
+    min-width: 210px;
+    max-width: 240px;
+    margin: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2.5px solid rgba(255,255,255,0.10);
+    transition: box-shadow 0.2s, transform 0.2s;
+    position: relative;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.18));
+}
+.contributor.card-style img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin-bottom: 1.3rem;
+    border: 3px solid var(--ng);
+    object-fit: cover;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    background: #23272f;
+}
+.contributor.card-style a {
+    color: var(--ng);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.4rem;
+    text-align: center;
+    margin-top: 0.7rem;
+    letter-spacing: 0.5px;
+    word-break: break-all;
+    background: none;
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
+}
+.about-card {
+    background: transparent;
+    border-radius: 1.5rem;
+    box-shadow: none;
+    padding: 2.5rem 2rem 2rem 2rem;
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+section.about-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    margin-top: 140px;
+    margin-bottom: 40px;
+}
+
+.about-card h1 {
+    color: var(--ng);
+    margin-bottom: 1.2rem;
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+}
+.about-card p {
+    color: #e0e0e0;
+    font-size: 1.25rem;
+    margin-bottom: 2.2rem;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 600px;
+}
+.about-card h2 {
+    color: var(--ng);
+    margin: 2rem 0 1.5rem 0;
+    font-size: 1.6rem;
+    letter-spacing: 0.5px;
+}
+.contributors-title {
+    font-size: 2.7rem;
+    color: var(--ng);
+    margin: 2rem 0 2.5rem 0;
+    letter-spacing: 1px;
+    font-weight: 800;
+}
+
+.contributors-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    gap: 3rem;
+    margin-bottom: 2rem;
+    flex-wrap: nowrap;
+}
+
+@media (max-width: 900px) {
+    .contributors-row {
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+}

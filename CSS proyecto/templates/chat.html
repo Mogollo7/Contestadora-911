@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
     <title>911-bot</title>
     <script defer src="{{ url_for('static', filename='js/chat.js') }}"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 </head>
 <body>
-   <header>
-    <a href="#" class="logo">Alex</a>
-    <nav>
-        <a href="#" class="Inicio"></a>
-        <a href="Index" >Inicio</a>
-        <a href="cola">Colas</a>
-        <a href="pila">Pilas</a>
-        <a href="#">Nosotros</a>
-        <a href="doc">Documentación</a>
-    </nav>
-   </header> 
+    <header>
+        <a href="#" class="logo">Alex</a>
+        <nav>
+            <a href="Index">Inicio</a>
+            <a href="cola">Colas</a>
+            <a href="pila">Pilas</a>
+            <a href="about">Nosotros</a>
+            <a href="https://github.com/Mogollo7/Contestadora-911.git" target="_blank">Documentación</a>
+        </nav>
+    </header>
     <div class="chat-box">
         <div class="chat-header">
             <div class="chat-profile">
@@ -36,17 +35,17 @@
             <div class="message-container">
                 <div class="message-text">
                     <p>
-                        👋 <strong>Bienvenido al chat de emergencias 911</strong>. Estamos aquí para ayudarte ante cualquier situación urgente.
-                        <br><br>
-                        Para asistirte de la forma más rápida y eficiente posible, se te hará una breve serie de preguntas.
-                        <br><br>
+                        👋 <strong>Bienvenido al chat de emergencias 911</strong>. Estamos aquí para ayudarte ante cualquier situación urgente.<br><br>
+                        Para asistirte de la forma más rápida y eficiente posible, se te hará una breve serie de preguntas.<br><br>
                         🕒 Por favor, responde con claridad para que podamos brindarte ayuda inmediata.
                     </p>
+                </div>
+            </div>
         </div>
         <div class="chat-input">
             <input type="text" id="msg" placeholder="Ingresa tu mensaje..."/>
-            <button onclick="send()">Send</button>
         </div>
     </div>
+    <!-- Se eliminó la sección About/Contribuidores si existía -->
 </body>
 </html>

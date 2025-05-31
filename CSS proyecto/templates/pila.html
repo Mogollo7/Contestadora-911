@@ -20,18 +20,20 @@
     <header>
         <a href="#" class="logo">Alex</a>
         <nav>
-            <a href="#" class="Inicio"></a>
-            <a href="Index" >Inicio</a>
+            <a href="Index">Inicio</a>
             <a href="cola">Colas</a>
             <a href="pila">Pilas</a>
-            <a href="#">Nosotros</a>
-            <a href="doc">Documentación</a>
+            <a href="about">Nosotros</a>
+            <a href="https://github.com/Mogollo7/Contestadora-911.git" target="_blank">Documentación</a>
         </nav>
     </header>
     <div class="historial-list">
     {% if historial|length == 0 %}
         <div class="no-data" style="text-align:center; margin-top: 100px;">
-            <img src="{{ url_for('static', filename='img/1.jpg') }}" alt="Sin emergencias" style="max-width:400px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color: #e74c3c; margin-bottom: 16px;">
+                <circle cx="12" cy="12" r="10" stroke="#e74c3c" stroke-width="2" fill="none"/>
+                <path stroke="#e74c3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01"/>
+            </svg>
             <p>No hay emergencias atendidas.</p>
         </div>
     {% else %}
@@ -60,5 +62,6 @@
         {% endfor %}
     {% endif %}
     </div>
+    <!-- Se eliminó la sección About/Contribuidores si existía -->
 </body>
 </html>
