@@ -46,15 +46,15 @@ def generar_id(nombre, direccion, tipo, fecha):
     raw = f"{nombre}{direccion}{tipo}{fecha}".encode('utf-8')
     return hashlib.sha256(raw).hexdigest()
 
-def guardar_emergencia(id_emergencia, fecha, nombre, direccion, tipo, prioridad, departamento, base):
+def guardar_emergencia(id_emergencia, fecha, nombre, direccion, tipo, prioridad, departamento, base, distance=None, duration=None):
     data_dir = asegurar_directorios()
     ruta_emergencias = os.path.join(data_dir, "emergencias.csv")
     existe = os.path.exists(ruta_emergencias)
     with open(ruta_emergencias, 'a', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         if not existe:
-            writer.writerow(['id', 'fecha', 'nombre', 'direccion', 'tipo', 'prioridad', 'departamento', 'base'])
-        writer.writerow([id_emergencia, fecha, nombre, direccion, tipo, prioridad, departamento, base])
+            writer.writerow(['id', 'fecha', 'nombre', 'direccion', 'tipo', 'prioridad', 'departamento', 'base', 'distance', 'duration'])
+        writer.writerow([id_emergencia, fecha, nombre, direccion, tipo, prioridad, departamento, base, distance, duration])
 
 def consultar_llama(prompt):
     try:
@@ -108,14 +108,17 @@ def limpiar_emergencias_y_guardar_historial():
             # Si historial.csv no existe, escribe la cabecera
             if not os.path.exists(ruta_historial):
                 with open(ruta_historial, 'w', encoding='utf-8') as h:
-                    h.write(lineas[0])
+                    h.write('id,fecha,nombre,direccion,tipo,prioridad,departamento,base,distance,duration\n')
             # Añade los datos (sin la cabecera)
             with open(ruta_historial, 'a', encoding='utf-8') as h:
                 for linea in lineas[1:]:
-                    h.write(linea)
+                    if linea.count(',') == 7:
+                        h.write(linea.strip() + ',,\n')
+                    else:
+                        h.write(linea)
     # Limpiar emergencias.csv (dejar solo la cabecera)
     with open(ruta_emergencias, 'w', encoding='utf-8') as f:
-        f.write('id,fecha,nombre,direccion,tipo,prioridad,departamento,base\n')
+        f.write('id,fecha,nombre,direccion,tipo,prioridad,departamento,base,distance,duration\n')
 
 # Llamar a la función al iniciar el programa
 limpiar_emergencias_y_guardar_historial()
@@ -155,20 +158,25 @@ def procesar_mensaje():
     base = ESTACIONES.get(departamento.lower(), "CALLE 142 A SUR CARRERA 50 25 CALDAS Antioquia")
     id_emergencia = generar_id(nombre, direccion, mensaje, fecha)
 
-    # Guardar emergencia
-    guardar_emergencia(id_emergencia, fecha, nombre, direccion, mensaje, prioridad, departamento, base)
-
-    # Respuesta de LLaMA
-    prompt = f"Eres un asistente de emergencias 911. El usuario reporta: '{mensaje}'. Dale una respuesta empática y profesional, mencionando que la prioridad es {prioridad}/10 y que se ha asignado al departamento de {departamento}."
-    respuesta_llama = consultar_llama(prompt)
-
     # Ruta
     info_ruta = None
+    distance = None
+    duration = None
     if direccion:
         coords_destino = obtener_coordenadas(direccion)
         coords_base = obtener_coordenadas(base)
         if coords_destino and coords_base:
             info_ruta = obtener_ruta(coords_base, coords_destino)
+            if info_ruta:
+                distance = info_ruta.get('distance')
+                duration = info_ruta.get('duration')
+
+    # Guardar emergencia
+    guardar_emergencia(id_emergencia, fecha, nombre, direccion, mensaje, prioridad, departamento, base, distance, duration)
+
+    # Respuesta de LLaMA
+    prompt = f"Eres un asistente de emergencias 911. El usuario reporta: '{mensaje}'. Dale una respuesta empática y profesional, mencionando que la prioridad es {prioridad}/10 y que se ha asignado al departamento de {departamento}."
+    respuesta_llama = consultar_llama(prompt)
 
     respuesta = {
         'mensaje': respuesta_llama,
@@ -253,16 +261,24 @@ def atender_todas():
     # Guardar las movidas en el historial
     existe_historial = os.path.exists(ruta_historial)
     with open(ruta_historial, 'a', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=['id','fecha','nombre','direccion','tipo','prioridad','departamento','base'])
+        writer = csv.DictWriter(f, fieldnames=['id','fecha','nombre','direccion','tipo','prioridad','departamento','base','distance','duration'])
         if not existe_historial:
             writer.writeheader()
         for row in movidas:
+            if 'distance' not in row:
+                row['distance'] = ''
+            if 'duration' not in row:
+                row['duration'] = ''
             writer.writerow(row)
     # Reescribir emergencias.csv solo con las que no se movieron
     with open(ruta_emergencias, 'w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=['id','fecha','nombre','direccion','tipo','prioridad','departamento','base'])
+        writer = csv.DictWriter(f, fieldnames=['id','fecha','nombre','direccion','tipo','prioridad','departamento','base','distance','duration'])
         writer.writeheader()
         for row in nuevas_emergencias:
+            if 'distance' not in row:
+                row['distance'] = ''
+            if 'duration' not in row:
+                row['duration'] = ''
             writer.writerow(row)
     # También pásalas a la pila en memoria en orden de prioridad
     for row in movidas:

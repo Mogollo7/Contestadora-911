@@ -47,6 +47,12 @@
                     <p><b>Departamento:</b> {{ emergencia.departamento }}</p>
                     <p><b>Dirección:</b> {{ emergencia.direccion }}</p>
                     <p><b>Descripción:</b> {{ emergencia.tipo }}</p>
+                    {% if emergencia.distance %}
+                    <p><b>Distancia:</b> {{ '%.2f'|format(emergencia.distance|float) }} km</p>
+                    {% endif %}
+                    {% if emergencia.duration %}
+                    <p><b>Duración estimada:</b> {{ '%.2f'|format(emergencia.duration|float) }} min</p>
+                    {% endif %}
                 </div>
             </div>
             {% if emergencia.base and (emergencia.base.endswith('.html') or emergencia.base.endswith('.png')) %}
