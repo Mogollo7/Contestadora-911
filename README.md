@@ -127,4 +127,9 @@ El sistema utiliza OSRM (Open Source Routing Machine) para calcular rutas y most
   - [@ALEKSITOooo](https://github.com/ALEKSITOooo)
 - Proyecto académico para Ingeniería Informática, 3er semestre, Estructura de Datos.
 
+## Enlace al proyecto en Deepwiki
+
+Puedes consultar la sección de *data management* en Deepwiki aquí:  
+[Contestadora 911 - Data Management](https://deepwiki.com/Mogollo7/Contestadora-911/4-data-management)
+
 
